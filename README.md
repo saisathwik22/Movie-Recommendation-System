@@ -191,7 +191,3 @@ movie-recommendation-system/
 - User feedback/rating mechanism to refine recommendations over time.
 
 ---
-
-## 📝 License
-
-MIT License
