@@ -6,7 +6,7 @@ A full-stack movie recommendation web application. It uses a content-based filte
 🔗 **Live Demo:** https://movie-recommendation-system-bmjtdzdddrhrfeqtftgqjf.streamlit.app/
 
 
-![Demo](assets/demo.gif)
+[Demo](assets/demo.gif)
 
 
 ---
