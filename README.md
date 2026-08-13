@@ -6,6 +6,9 @@ A full-stack movie recommendation web application. It uses a content-based filte
 🔗 **Live Demo:** https://movie-recommendation-system-bmjtdzdddrhrfeqtftgqjf.streamlit.app/
 
 
+![Demo](assets/demo.gif)
+
+
 ---
 
 ## 📌 What It Does
@@ -184,10 +187,3 @@ movie-recommendation-system/
 
 ---
 
-## 🔮 Possible Future Enhancements
-
-- Collaborative filtering or a hybrid recommendation approach (combining content-based and user-behavior-based methods).
-- Include additional features (director, cast) in the similarity calculation for richer recommendations.
-- User feedback/rating mechanism to refine recommendations over time.
-
----
