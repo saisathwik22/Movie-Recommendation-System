@@ -59,39 +59,7 @@ The recommendation logic was developed and tested in a Jupyter notebook, then re
 - Error handling with fallback responses if TMDB or the model lookup fails.
 ### Frontend — Streamlit (`app.py`)
  
-**Home view:**
-- Search bar with autocomplete dropdown (filtered by keyword match).
-- Poster grid showing search results.
-- Category selector to browse the home feed (trending/popular/top-rated/etc.).
-**Details view:**
-- Displays poster, backdrop, title, release date, genres, and overview.
-- Shows both TF-IDF and genre-based recommendation lists.
-- Back navigation to return to search/browse.
-- Uses URL query parameters to keep state, so views can be shared as links.
----
- 
-## 🔌 API Response Models
- 
-**TMDBMovieCard**
-- `tmdb_id`: int
-- `title`: str
-- `poster_url`: Optional[str]
-- `release_date`: Optional[str]
-- `vote_average`: Optional[float]
-**TMDBMovieDetails**
-- `tmdb_id`: int
-- `title`: str
-- `overview`: Optional[str]
-- `release_date`: Optional[str]
-- `poster_url`: Optional[str]
-- `backdrop_url`: Optional[str]
-- `genres`: List[dict]
-**SearchBundleResponse**
-- `query`: str
-- `movie_details`: TMDBMovieDetails
-- `tfidf_recommendations`: List[TFIDFRecItem]
-- `genre_recommendations`: List[TMDBMovieCard]
----
+
  
 ## 🛠️ Tech Stack
  
@@ -136,53 +104,3 @@ streamlit run app.py
  
 Then open `http://localhost:8501` in your browser.
  
-### Rebuilding the recommendation model
-If you want to regenerate the `.pkl` files from the raw dataset:
-1. Place `movies_metadata.csv` in the project root.
-2. Run `Movie_Recommendation_System.ipynb` cell by cell — it will clean the data, preprocess text, compute the TF-IDF matrix, and save all pickle files.
-Example of using the model directly in Python:
-```python
-import pickle
-import pandas as pd
-from sklearn.metrics.pairwise import cosine_similarity
- 
-tfidf_matrix = pickle.load(open('tfidf_matrix.pkl', 'rb'))
-indices = pickle.load(open('indices.pkl', 'rb'))
-df = pd.read_pickle('df.pkl')
- 
-def recommend(title, n=10):
-    if title not in indices:
-        return ['Movie not found']
-    idx = indices[title]
-    similarity_score = cosine_similarity(tfidf_matrix[idx], tfidf_matrix).flatten()
-    similar_idx = similarity_score.argsort()[::-1][1:n+1]
-    return df['title'].iloc[similar_idx]
- 
-print(recommend('Toy Story'))
-```
- 
----
- 
-## 📁 Project Structure
- 
-```
-movie-recommendation-system/
-├── main.py                            # FastAPI backend
-├── app.py                             # Streamlit frontend
-├── Movie_Recommendation_System.ipynb  # Notebook: data cleaning, preprocessing, model building
-├── movies_metadata.csv                # Raw input dataset
-├── requirements.txt                   # Python dependencies
-├── df.pkl                             # Preprocessed movie dataset
-├── indices.pkl                        # Title-to-index mapping
-├── tfidf_matrix.pkl                   # Pre-computed TF-IDF matrix
-└── tfidf.pkl                          # TF-IDF vectorizer object
-```
- 
----
- 
-## 🔮 Possible Future Enhancements
- 
-- Collaborative filtering or a hybrid recommendation approach (combining content-based and user-behavior-based methods).
-- Include additional features (director, cast) in the similarity calculation for richer recommendations.
-- User feedback/rating mechanism to refine recommendations over time.
----
